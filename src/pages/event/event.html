@@ -1,0 +1,45 @@
+<!--
+  Generated template for the Event page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>event</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid class="grid">
+    <ion-row>
+      <ion-col col-1 no-padding><div class="block-time">time</div></ion-col>
+      <ion-col col-11>
+        <ion-row>
+          <ion-col (click)="goToMonday()"><div class="block-day" text-center>Mo</div></ion-col>
+          <ion-col><div class="block-day" text-center>Tu</div></ion-col>
+          <ion-col><div class="block-day" text-center>We</div></ion-col>
+          <ion-col><div class="block-day" text-center>Th</div></ion-col>
+          <ion-col><div class="block-day" text-center>Fr</div></ion-col>
+          <ion-col><div class="block-day" text-center>Sa</div></ion-col>
+          <ion-col><div class="block-day" text-center>Su</div></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="block-talk" style="background-color:red;"></div>
+            <div class="block-talk" style="background-color:red;"></div>
+          </ion-col>
+          <ion-col><div class="block-talk" style="background-color:aqua;"></div></ion-col>
+          <ion-col><div class="block-talk" style="background-color:green;"></div></ion-col>
+          <ion-col><div class="block-talk" style="background-color:purple;"></div></ion-col>
+          <ion-col><div class="block-talk" style="background-color:darkred;"></div></ion-col>
+          <ion-col><div class="block-talk" style="background-color:yellow;"></div></ion-col>
+          <ion-col><div class="block-talk" style="background-color:orange;"></div></ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
