@@ -21,4 +21,8 @@ export class Talks {
     console.log('ionViewDidLoad Talks');
   }
 
+  goToTalk() {
+    this.navCtrl.push("Talk")
+  }
+
 }
