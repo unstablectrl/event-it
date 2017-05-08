@@ -16,29 +16,33 @@
 <ion-content>
 
   <ion-item-divider>May 1st - Moday</ion-item-divider>
+  <div *ngFor="let talk of monday">
   <ion-card class="talk-card" (click)="goToTalk()">
 
     <ion-row class="theme-tag" style="background-color: red;">
     </ion-row>
 
-    <ion-card-header text-center text-uppercase>Portal do Investigador</ion-card-header>
+    <ion-card-header text-center text-uppercase>{{talk.title}}</ion-card-header>
 
     <ion-list>
       <ion-item>
         <ion-icon name="people" item-left small></ion-icon>
-        António Rosado, João Fernandes, João Fernandes, João Fernandes
+        {{talk.authors}}
       </ion-item>
       <ion-item>
         <ion-icon name="time" item-left small></ion-icon>
-        10:05 am - 11:05 am
+        {{talk.start}}
       </ion-item><hr class="style">
       <ion-item>
         <ion-icon name="pricetag" item-left small></ion-icon>
-        #Web #WordPress #Database #Database #Database #Database #Database
+        <span *ngFor="let tag of talk.tags">
+        #{{tag}} 
+        </span>
       </ion-item>
     </ion-list>
 
   </ion-card>
+  </div>
   
 
 </ion-content>
