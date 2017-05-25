@@ -1,0 +1,73 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Editor</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="logOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!--<ion-input #newname placeholder="Enter Name"></ion-input>
+  <button ion-button full (click)="setName(newname.value)">Set new Name!</button>
+  Current name: {{(fbName | async)?.name}}-->
+
+  <ion-item>
+    <ion-label>Enter Title:</ion-label>
+    <ion-input #title value="Title"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Enter Authors:</ion-label>
+    <ion-input #authors value="Authors"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Start Date:</ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="start"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>End Date:</ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="end"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Enter Tags:</ion-label>
+    <ion-input #tags value="Tags"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Enter Theme:</ion-label>
+    <ion-input #theme value="#777777"></ion-input>
+  </ion-item>
+  <button ion-button full (click)="setTalk(title.value, authors.value, tags.value, theme.value)">Set new Talk!</button>
+  <div *ngFor="let talk of talks | async">
+    <ion-card class="talk-card" (click)="removeTalk(talk.$key)">
+
+      <ion-row class="theme-tag" [ngStyle]="{'background-color': talk.theme}">
+      </ion-row>
+
+      <ion-card-header text-center text-uppercase>{{talk.title}}</ion-card-header>
+
+      <ion-list>
+        <ion-item>
+          <ion-icon name="people" item-left small></ion-icon>
+          <span *ngFor="let author of talk.authors; let i=index">{{author}}<span *ngIf="i != talk.authors.length-1">,</span> </span>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="time" item-left small></ion-icon>
+          {{talk.start}}
+        </ion-item><hr class="style">
+        <ion-item>
+          <ion-icon name="pricetag" item-left small></ion-icon>
+          <span *ngFor="let tag of talk.tags">
+          #{{tag}} 
+          </span>
+        </ion-item>
+      </ion-list>
+
+    </ion-card>
+  </div>
+
+</ion-content>
