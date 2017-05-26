@@ -1,6 +1,6 @@
 import { FirebaseService } from './../../providers/firebase-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 @IonicPage()
@@ -16,13 +16,9 @@ export class Editor {
   start: String = new Date().toISOString();
   end: String = new Date().toISOString();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, afDB: AngularFireDatabase, public firebaseService: FirebaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, afDB: AngularFireDatabase, public firebaseService: FirebaseService, private modal: ModalController) {
     this.talks = afDB.list('/talks');
     this.fbName = afDB.object('/myname');
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Firebase');
   }
 
   setName(newName) {
@@ -46,6 +42,26 @@ export class Editor {
 
   logOut() {
     this.firebaseService.logoutUser();
+  }
+
+  updateTalk(talk) {
+    const content = {
+      title: 'Edit Talk',
+      action: 'update',
+      actionText: 'Update!'
+    }
+    const updateTalkModel = this.modal.create('EditorTalk', {'talk': talk, 'content': content});
+    updateTalkModel.present();
+  }
+
+  createTalk() {
+    const content = {
+      title: 'Create New Talk',
+      action: 'create',
+      actionText: 'New Talk!'
+    }
+    const newTalkModel = this.modal.create('EditorTalk', {'content': content});
+    newTalkModel.present();
   }
 
 }

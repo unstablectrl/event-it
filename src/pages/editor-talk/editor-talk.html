@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      {{content.title}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">Close</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="talkForm" (ngSubmit)="onAction(content.action)">
+    <ion-item>
+      <ion-label floating>Title</ion-label>
+      <ion-input type="text" formControlName="title" value="{{talk?.title}}"></ion-input>
+    </ion-item>
+    <!--<ion-item>
+      <ion-label>Authors</ion-label>
+      <ion-input type="text" form ControlName="Authors"></ion-input>
+    </ion-item>-->
+    <!--<ion-item>
+      <ion-label>Start Date:</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="start"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Date:</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="end"></ion-datetime>
+    </ion-item>-->
+    <!--<ion-item>
+      <ion-label>Enter Tags:</ion-label>
+      <ion-input #tags value="Tags"></ion-input>
+    </ion-item>-->
+    <!--<ion-item>
+      <ion-label>Enter Theme:</ion-label>
+      <ion-input #theme value="#777777"></ion-input>
+    </ion-item>-->
+    <button ion-button full type="submit" [disabled]="!talkForm.valid">{{content.actionText}}</button>
+  </form>
+  <button ion-button full color="danger" (click)="removeTalk()" *ngIf="talk != undefined">Delete Talk!</button>
+</ion-content>

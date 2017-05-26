@@ -13,37 +13,8 @@
 
 
 <ion-content padding>
-  <!--<ion-input #newname placeholder="Enter Name"></ion-input>
-  <button ion-button full (click)="setName(newname.value)">Set new Name!</button>
-  Current name: {{(fbName | async)?.name}}-->
-
-  <ion-item>
-    <ion-label>Enter Title:</ion-label>
-    <ion-input #title value="Title"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Enter Authors:</ion-label>
-    <ion-input #authors value="Authors"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Start Date:</ion-label>
-    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="start"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>End Date:</ion-label>
-    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="end"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>Enter Tags:</ion-label>
-    <ion-input #tags value="Tags"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Enter Theme:</ion-label>
-    <ion-input #theme value="#777777"></ion-input>
-  </ion-item>
-  <button ion-button full (click)="setTalk(title.value, authors.value, tags.value, theme.value)">Set new Talk!</button>
   <div *ngFor="let talk of talks | async">
-    <ion-card class="talk-card" (click)="removeTalk(talk.$key)">
+    <ion-card class="talk-card" (click)="updateTalk(talk)">
 
       <ion-row class="theme-tag" [ngStyle]="{'background-color': talk.theme}">
       </ion-row>
@@ -69,5 +40,11 @@
 
     </ion-card>
   </div>
+
+  <ion-fab right bottom padding>
+    <button ion-fab (click)="createTalk()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

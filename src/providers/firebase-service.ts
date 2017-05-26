@@ -36,4 +36,17 @@ export class FirebaseService {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
+  createTalk(talk) {
+    talk.creator = this.user.uid;
+    return this.afd.list('/talks').push(talk);
+  }
+
+  updateTalk(key, talk) {
+    return this.afd.object('/talks/' + key).update(talk)
+  }
+
+  removeTalk(key) {
+    return this.afd.object('/talks/' + key).remove();
+  }
+
 }
