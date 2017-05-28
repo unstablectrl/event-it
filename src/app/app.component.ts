@@ -8,7 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:string = 'LoginPage';
+  rootPage:string;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private firebaseService: FirebaseService) {
     platform.ready().then(() => {
@@ -16,7 +16,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-
+      console.log('start')
       firebaseService.authState.subscribe(user => {
         console.log('user changed: ', user);
         if (user)

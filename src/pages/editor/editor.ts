@@ -1,7 +1,8 @@
-import { FirebaseService } from './../../providers/firebase-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+// import { FirebaseListObservable } from 'angularfire2/database';
+
+import { FirebaseService } from './../../providers/firebase-service';
 
 @IonicPage()
 @Component({
@@ -10,38 +11,27 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 })
 export class Editor {
 
-  items: FirebaseListObservable<any[]>;
-  fbName: FirebaseObjectObservable<any>;
-  talks: FirebaseListObservable<any[]>;
-  start: String = new Date().toISOString();
-  end: String = new Date().toISOString();
+  // talks: FirebaseListObservable<any[]>;
+  talks;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, afDB: AngularFireDatabase, public firebaseService: FirebaseService, private modal: ModalController) {
-    this.talks = afDB.list('/talks');
-    this.fbName = afDB.object('/myname');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, private modal: ModalController) {
   }
 
-  setName(newName) {
-    this.fbName.set({name: newName});
-  }
-
-  setTalk(title, authors, tags, theme) {
-    this.talks.push({
-      "title": title,
-      "authors": authors.split(","),
-      "start": this.start,
-      "end": this.end,
-      "tags": tags.split(","),
-      "theme": theme
+  ionViewDidLoad() {
+    this.firebaseService.authState.subscribe(user => {
+      if (user) {
+        this.talks = this.firebaseService.readTalks();
+      }
     });
-  }
-
-  removeTalk(key) {
-    this.talks.remove(key);
   }
 
   logOut() {
     this.firebaseService.logoutUser();
+  }
+
+  cardClick(talk) {
+    console.log('cardClick New');
+    this.updateTalk(talk);
   }
 
   updateTalk(talk) {
@@ -62,6 +52,30 @@ export class Editor {
     }
     const newTalkModel = this.modal.create('EditorTalk', {'content': content});
     newTalkModel.present();
+  }
+
+  createTheme() {
+    const content = {
+      title: 'Create New Theme',
+      action: 'create',
+      actionText: 'New Theme!'
+    }
+    const newTalkModel = this.modal.create('EditorTheme', {'content': content});
+    newTalkModel.present();
+  }
+
+  createPerson() {
+    const content = {
+      title: 'Create New Person',
+      action: 'create',
+      actionText: 'New Person!'
+    }
+    const newTalkModel = this.modal.create('EditorPerson', {'content': content});
+    newTalkModel.present();
+  }
+
+  test() {
+    this.firebaseService.test();
   }
 
 }

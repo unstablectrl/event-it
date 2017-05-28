@@ -28,23 +28,30 @@
         </ion-item>
         <ion-item>
           <ion-icon name="time" item-left small></ion-icon>
-          {{talk.start}}
+          {{talk.start | date:'shortTime' }}
         </ion-item><hr class="style">
         <ion-item>
           <ion-icon name="pricetag" item-left small></ion-icon>
-          <span *ngFor="let tag of talk.tags">
+          <!--<span *ngFor="let tag of talk.tags">
           #{{tag}} 
-          </span>
+          </span>-->
         </ion-item>
       </ion-list>
 
     </ion-card>
   </div>
+  <!--<talk-card></talk-card>-->
 
-  <ion-fab right bottom padding>
-    <button ion-fab (click)="createTalk()">
+  <ion-fab right bottom>
+    <button ion-fab>
       <ion-icon name="add"></ion-icon>
     </button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="createTalk()"><ion-icon name="chatbubbles"></ion-icon></button>
+      <button ion-fab (click)="createTheme()"><ion-icon name="color-palette"></ion-icon></button>
+      <button ion-fab (click)="createPerson()"><ion-icon name="person"></ion-icon></button>
+      <button ion-fab (click)="test()"><ion-icon name="warning"></ion-icon></button>
+    </ion-fab-list>
   </ion-fab>
 
 </ion-content>
