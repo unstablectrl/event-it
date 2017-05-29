@@ -14,43 +14,49 @@
 
 <ion-content padding>
   <form [formGroup]="talkForm" (ngSubmit)="onAction(content.action)">
+    <!--TITLE-->
     <ion-item>
       <ion-label stacked>Title</ion-label>
       <ion-input type="text" formControlName="title" value="{{talk?.title}}"></ion-input>
     </ion-item>
-    <!--<ion-item>
-      <ion-label stacked>Enter Tags</ion-label>
-      <ion-input type="text" formControlName="tags"></ion-input>
-    </ion-item>-->
-    <!--<ion-item>
+    <!--START DATE-->
+    <ion-item>
       <ion-label stacked>Start Date</ion-label>
       <ion-datetime formControlName="start" displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="start"></ion-datetime>
-    </ion-item>-->
-    <!--<ion-item>
+    </ion-item>
+    <!--END DATE-->
+    <ion-item>
       <ion-label stacked>End Date</ion-label>
       <ion-datetime formControlName="end" displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="end"></ion-datetime>
-    </ion-item>-->
+    </ion-item>
+    <!--AUTHORS-->
     <ion-item>
       <ion-label stacked>Authors</ion-label>
-      <!--<ion-input type="text" formControlName="authors"></ion-input>-->
       <ion-select formControlName="authors" [(ngModel)]="authors" multiple="true">
         <div *ngFor="let person of people | async">
           <ion-option value="{{person.$key}}">{{person.name}}</ion-option>
         </div>
       </ion-select>
     </ion-item>
-    <!--<ion-item>
+    <!--THEME-->
+    <ion-item>
       <ion-label stacked>Theme</ion-label>
       <ion-select formControlName="theme" [(ngModel)]="theme">
         <div *ngFor="let theme of themes | async">
           <ion-option value="{{theme.$key}}">{{theme.name}}</ion-option>
         </div>
       </ion-select>
-    </ion-item>-->
-    <!--<ion-item>
+    </ion-item>
+    <!--DESCRIPTION-->
+    <ion-item>
       <ion-label stacked>Description</ion-label>
       <ion-textarea rows="4" formControlName="description" value="{{talk?.description}}"></ion-textarea>
-    </ion-item>-->
+    </ion-item>
+    <!--TAGS-->
+    <ion-item>
+      <ion-label stacked>Enter Tags</ion-label>
+      <ion-input type="text" formControlName="tags" [(ngModel)]="tags"></ion-input>
+    </ion-item>
     <button ion-button full type="submit" [disabled]="!talkForm.valid">{{content.actionText}}</button>
   </form>
   <button ion-button full color="danger" (click)="removeTalk()" *ngIf="talk != undefined">Delete Talk!</button>

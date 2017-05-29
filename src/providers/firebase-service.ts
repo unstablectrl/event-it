@@ -52,55 +52,31 @@ export class FirebaseService {
   }
 
   readTalks() {
-
-    // let ta = this.afd.list('/talks', {
-    //   query: {
-    //     orderByChild: 'start'
-    //   }
-    // })
-    // let res= [];
-    // this.afd.list('/talks').$ref.on('child_added', talksnap=>{
-    //   this.afd.list('/themes/'+talksnap.val().theme).$ref.once('value', themesnap=>{
-    //     let aaa = talksnap.val()
-    //     aaa.theme = themesnap.val()
-    //     res.push(aaa)
-    //     // console.log('join:',aaa)
-    //   })
-    // })
-    // console.log(res)
-    
-
-    // ta.map(x=> {
-
-    // })
-    
-    // let tal = ta.$ref;
-    // tal.on('child_added', snap => {
-    //   // console.log(snap.val())
-    //   console.log('')
-    //   let themes = this.afd.list('/themes/'+snap.val().theme).$ref;
-    //   themes.once('value', themeSnap => {
-    //     console.log(themeSnap.val())
-    //   })
-
-    //   let th = this.afd.list('/themes/'+snap.val().theme)
-    //   th.subscribe(theme=>{
-    //     console.log('something', theme)
-    //   })
-    // })
-
-    this.ta = this.afd.list('/talks')
+    this.ta = this.afd.list('/talks', {
+        query: {
+          orderByChild: 'start'
+        }
+      })
       .map(talks => {
         talks.map( t => {
-          this.afd.object('/themes/' + t.theme).$ref.once('value', snap => {
-            console.log(snap.val())
-            t.themec = Object.keys(snap.val()).map(key => [key, snap.val()[key]])
+          this.afd.object('/themes/' + t.theme).$ref.on('value', snap => {
+            let keycopy = t.theme
+            t.theme = []
+            t.theme.key = keycopy
+            Object.keys(snap.val()).map(key => t.theme[key] = snap.val()[key])
+          })
+          Object.keys(t.authors).map(author => {
+            this.afd.object('/people/' + t.authors[author]).$ref.on('value', snap => {
+              let keycopy = t.authors[author]
+              t.authors[author] = []
+              t.authors[author].key = keycopy
+              Object.keys(snap.val()).map(key => t.authors[author][key] = snap.val()[key])
+            })
           })
         })
         console.log('talks', talks)
         return talks
       })
-    console.log('ta', this.ta)
     return this.ta
   }
 
