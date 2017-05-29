@@ -9,6 +9,7 @@ import * as firebase from 'firebase/app';
 export class FirebaseService {
   authState: Observable<firebase.User>;
   user: firebase.User;
+  ta: Observable<any[]>;
 
   constructor(private afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
     this.authState = afAuth.authState;
@@ -52,21 +53,21 @@ export class FirebaseService {
 
   readTalks() {
 
-    let ta = this.afd.list('/talks', {
-      query: {
-        orderByChild: 'start'
-      }
-    })
-    let res= [];
-    this.afd.list('/talks').$ref.on('child_added', talksnap=>{
-      this.afd.list('/themes/'+talksnap.val().theme).$ref.once('value', themesnap=>{
-        let aaa = talksnap.val()
-        aaa.theme = themesnap.val()
-        res.push(aaa)
-        // console.log('join:',aaa)
-      })
-    })
-    console.log(res)
+    // let ta = this.afd.list('/talks', {
+    //   query: {
+    //     orderByChild: 'start'
+    //   }
+    // })
+    // let res= [];
+    // this.afd.list('/talks').$ref.on('child_added', talksnap=>{
+    //   this.afd.list('/themes/'+talksnap.val().theme).$ref.once('value', themesnap=>{
+    //     let aaa = talksnap.val()
+    //     aaa.theme = themesnap.val()
+    //     res.push(aaa)
+    //     // console.log('join:',aaa)
+    //   })
+    // })
+    // console.log(res)
     
 
     // ta.map(x=> {
@@ -87,21 +88,20 @@ export class FirebaseService {
     //     console.log('something', theme)
     //   })
     // })
-    return ta
-  }
 
-  extend(base) {
-    var parts = Array.prototype.slice.call(arguments, 1);
-    parts.forEach(function (p) {
-      if (p && typeof (p) === 'object') {
-        for (var k in p) {
-          if (p.hasOwnProperty(k)) {
-            base[k] = p[k];
-          }
-        }
-      }
-    });
-    return base;
+    this.ta = this.afd.list('/talks')
+      .map(talks => {
+        talks.map( t => {
+          this.afd.object('/themes/' + t.theme).$ref.once('value', snap => {
+            console.log(snap.val())
+            t.themec = Object.keys(snap.val()).map(key => [key, snap.val()[key]])
+          })
+        })
+        console.log('talks', talks)
+        return talks
+      })
+    console.log('ta', this.ta)
+    return this.ta
   }
 
   readThemes() {
